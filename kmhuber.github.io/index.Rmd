@@ -1,0 +1,17 @@
+---
+title: "About this Project"
+---
+
+## Dorothea Dix Hospital - Raleigh, NC 
+
+Dorothea Dix Hospital was North Carolina's first psychiatric hospital. It was named the Insane Hospital of North Carolina at its founding, and the first patient was admitted in 1856. The hospital closed in August 2012 and the last patients were moved to Central Regional Hospital in Butner, North Carolina.   [(source)](https://www.ncdcr.gov/blog/2016/02/22/doors-at-dix-hospital-opened-1856/)
+
+![Ledger Photo c/o the Community Histories Workshop](~/Desktop/Spring 2020/EPID 886 - Independent Study/ledger_photo_reduced.jpg)
+
+## About the Ledger 
+
+The admissions ledger contains information about each patient admitted to the hospital, beginning with the hospital's first patient. Demographic information - age, gender, occupation, marital status, and county of residence - for each patient was handwritten into the ledger. Additionally, information about each patient's admittance and stay at the hospital was recorded: date of admittance and discharge, supposed cause and form of illness, duration of symptoms before admittance, number of previous attacks, age at first attack, and final condition with additional space for remarks. 
+
+The [Community Histories Workshop](communityhistories.org) at UNC-Chapel Hill has created what is believed to be the first comprehensive searchable database of a nineteenth-century American insane asylum, with 7479 admissions between 1856 and 1916.
+
+This project aims to promote further engagement with the admissions ledger with the interactive data visualizations that follow. 

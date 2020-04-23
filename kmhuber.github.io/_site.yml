@@ -1,0 +1,20 @@
+name: "my-website"
+navbar:
+  title: "Visualizing the Dorothea Dix Hospital Ledger"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Visualizations"
+      href: visualizations.html
+    - text: "About"
+      href: about.html
+    - icon: fa-envelope
+      href: contact.html
+    - icon: fa-github
+      href: https://github.com/kmhuber/kmhuber.github.io
+output:
+  html_document:
+    theme: flatly
+    include:
+      after-body: footer.html
+    css: 'styles.css' 

@@ -1,0 +1,10 @@
+---
+title: "Acknowledgements"
+---
+
+All data are courtesy of [Dr. Robert Allen](http://communityhistories.org/about/robert-allen/) and [Sarah Almond](http://communityhistories.org/about/sarah-almond/) at UNC-Chapel Hill. Ledgers were transcribed and digitized by Thomas Burnett, Hannah Frisch, Keely Curry, and Dani Callahan, based on physical intake ledgers provided by the City of Raleigh.
+
+Data cleaning and visualization was completed by Katie Huber and Nabarun Dasgupta at UNC-Chapel Hill. 
+
+[Open source code and project details](https://github.com/opioiddatalab/DixLedger)
+
