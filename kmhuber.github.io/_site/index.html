@@ -11,7 +11,7 @@
 
 
 
-<title>About this Project</title>
+<title>index.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -251,6 +254,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -258,6 +324,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -307,28 +383,44 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">About this Project</h1>
 
 </div>
 
 
+<p><br/><br/></p>
 <div id="dorothea-dix-hospital---raleigh-nc" class="section level2">
-<h2>Dorothea Dix Hospital - Raleigh, NC</h2>
-<p>Dorothea Dix Hospital was North Carolina’s first psychiatric hospital. It was named the Insane Hospital of North Carolina at its founding, and the first patient was admitted in 1856. The hospital closed in August 2012 and the last patients were moved to Central Regional Hospital in Butner, North Carolina. <a href="https://www.ncdcr.gov/blog/2016/02/22/doors-at-dix-hospital-opened-1856/">(source)</a></p>
+<h2><strong>Dorothea Dix Hospital - Raleigh, NC</strong></h2>
+<p>Dorothea Dix Hospital was North Carolina’s first psychiatric hospital, with the first patient admitted in 1856. The hospital closed in August 2012 and the last patients were moved to Central Regional Hospital in Butner, North Carolina. The <a href="https://dixpark.org/sites/dixpark/files/2018-11/Dix%20Park_Full%20Legacy%20Report_2018.pdf">Final Report</a> of the Dix Legacy Committee provides an extensive history of the hospital. <br/><br/></p>
 <div class="figure">
-<img src="/Users/katiehuber/Desktop/Spring%202020/EPID%20886%20-%20Independent%20Study/ledger_photo_reduced.jpg" alt="Ledger Photo c/o the Community Histories Workshop" />
-<p class="caption">Ledger Photo c/o the Community Histories Workshop</p>
+<img src="photos/dixhospital-reduced.jpg" alt="Inset illustration from C. Drie, &quot;Bird’s eye view of the city of Raleigh, North Carolina 1872. Retrieved from Library of Congress." />
+<p class="caption"><em>Inset illustration from C. Drie, &quot;Bird’s eye view of the city of Raleigh, North Carolina 1872. Retrieved from <a href="https://www.loc.gov/resource/g3904r.pm006660/?r=0.065,0.041,1.058,0.497,0">Library of Congress.</a></em></p>
 </div>
+<p><br/><br/></p>
 </div>
 <div id="about-the-ledger" class="section level2">
-<h2>About the Ledger</h2>
-<p>The admissions ledger contains information about each patient admitted to the hospital, beginning with the hospital’s first patient. Demographic information - age, gender, occupation, marital status, and county of residence - for each patient was handwritten into the ledger. Additionally, information about each patient’s admittance and stay at the hospital was recorded: date of admittance and discharge, supposed cause and form of illness, duration of symptoms before admittance, number of previous attacks, age at first attack, and final condition with additional space for remarks.</p>
+<h2><strong>About the Ledger</strong></h2>
 <p>The <a href="communityhistories.org">Community Histories Workshop</a> at UNC-Chapel Hill has created what is believed to be the first comprehensive searchable database of a nineteenth-century American insane asylum, with 7479 admissions between 1856 and 1916.</p>
-<p>This project aims to promote further engagement with the admissions ledger with the interactive data visualizations that follow.</p>
+<p>The admissions ledger contains information about each patient admitted to the hospital, beginning with the hospital’s first patient. Demographic information - age, gender, occupation, marital status, and county of residence - for each patient was handwritten into the ledger. Additionally, information about each patient’s admittance and stay at the hospital was recorded: date of admittance and discharge, supposed cause and form of illness, duration of symptoms before admittance, number of previous attacks, age at first attack, and final condition with additional space for remarks.</p>
+<div class="figure">
+<img src="photos/ledger_photo_reduced.jpg" alt="Ledger Photo c/o the Community Histories Workshop" />
+<p class="caption">Ledger Photo c/o the Community Histories Workshop</p>
+</div>
+<p><br/><br/></p>
+</div>
+<div id="about-this-project" class="section level2">
+<h2><strong>About this Project</strong></h2>
+<p>We used a de-identified and digitized version of the admissions ledger to perform data cleaning and analysis.</p>
+<p>This project aims to promote further engagement with the admissions ledger with the interactive data visualizations that follow. Our quantitative analyses are primarily for developing hypotheses that can be examined using other primary sources from the era. <br/><br/></p>
+</div>
+<div id="future-directions" class="section level2">
+<h2><strong>Future Directions</strong></h2>
+<p>There are many other sources of information about the Dorothea Dix Hospital and its patients, including interview transcripts, staff meeting notes, genealogy records, and newspaper archives. As of now, these resources are available to provide context and details, but are being analyzed separately.</p>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -361,6 +453,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

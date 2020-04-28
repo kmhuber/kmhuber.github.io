@@ -1,28 +1,127 @@
 ---
 title: "Visualizations"
-
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+source("ledger.R")
+
+```
+<br/><br/>
+
+## Introduction
+
+Visualizations were created using R. Open source code is available on GitHub.
+
+<br/><br/>
+
+## Supposed causes of insanity
+
+The ledger took note of what was thought to be the cause of each patient's illness. Supposed causes have been cleaned in preparation for analysis. Supposed causes have been categorized as either *situational* or *physical*. Additionally, supposed causes have been categorized. 
+
+The table below shows the supposed causes as transcribed from the ledger and their frequencies.
+
+```{r transcrib, echo=FALSE}
+sct <- ledger %>% group_by(supposedcauseofattackastranscrib) %>% summarize(n()) 
+sct = sct %>% rename(frequency = "n()")
+sct$supposedcauseofattackastranscrib[is.na(sct$supposedcauseofattackastranscrib)] <- "Unknown"
+sct <- arrange(sct, desc(frequency))
+
+sct_table <- plot_ly(
+  type = 'table',
+  columnwidth=c(100,100),
+  columnorder=c(0,1),
+  header = list(
+    values = c("Supposed cause as transcribed", "Frequency"),
+    align=c("center", "center"),
+    line=list(width=1, color="black"),
+    fill = list(color=c("#2D3E50", "#2D3E50")),
+    font = list(family="Arial", size=14, color="white")
+  ),
+  cells = list(
+    values=rbind(sct$supposedcauseofattackastranscrib, sct$frequency),
+    align=c("center", "center"),
+    line=list(color="black", width=1),
+    font=list(family="Arial", size=12, color=c("black"))
+  ))
+
+sct_table
+
 ```
 
-## R Markdown
+To compare, the visualizations below show the cleaned and categorized supposed causes and their frequencies in the ledger.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+``` {r sccat, echo=FALSE}
+sccat_tab <- data.frame(table(ledger$supposedcausecategory1, useNA="always"), stringsAsFactors = FALSE)
+sccat_tab$Var1 <- as.character(sccat_tab$Var1)
+sccat_tab$Var1[is.na(sccat_tab$Var1)] <- "Unknown"
+sccat_tab$Var1 <- factor(sccat_tab$Var1)
+sccat_tab = sccat_tab %>% rename(Category = "Var1", Frequency="Freq")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+sccat <- ggplotly(ggplot(sccat_tab, aes(x=Category, y=Frequency)) + geom_bar(stat="identity", fill="#2D3E50") + labs(x="Supposed Cause Category", title="Frequency of Supposed Cause Categories") + theme_classic())
 
-```{r cars}
-summary(cars)
+sccat
 ```
 
-## Including Plots
+``` {r sccleansb, include=FALSE}
+ledger_sb <- ledger %>% select(supposedcausecategory1, supposedcausecleaned1, supposedcausecleaned2)
+ledger_sb <- ledger_sb %>% group_by(supposedcausecategory1, supposedcausecleaned1, supposedcausecleaned2) %>% summarize(n()) 
+ledger_sb= ledger_sb %>% rename(count = "n()")
 
-You can also embed plots, for example:
+ledger_sb = ledger_sb %>% mutate(path = paste(supposedcausecategory1, supposedcausecleaned1, supposedcausecleaned2, sep="-"))
+ledger_sb$path <- gsub("-NA", "-", ledger_sb$path)
+ledger_sb <- head(ledger_sb, -1)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+ledger_sb <- ungroup(ledger_sb)
+ledgersb <- ledger_sb %>% arrange(desc(count)) %>% select(path, count)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+<br/><br/>
+
+**Frequencies of Supposed Causes**
+``` {r sccleansbprint, echo=FALSE}
+# scclean
+sund2b(ledgersb)
+```
+*X% of admissions (X) had supposed causes recorded. X admissions with unknown or unrecorded supposed causes have been excluded from this visualization.*
+<br/><br/>
+
+### Supposed causes by Gender
+The interactive sunburst charts below show supposed causes by gender. Gender was missing for 1.6% (123) of admissions and have been excluded from these visualizations. A total of 3525 women and 3831 men were admitted between 1856-1916.
+
+**Supposed causes by Gender: Male**
+``` {r sunburstmale, echo=FALSE}
+sund2b(ledger_male_sb)
+```
+*X% of admissions of men (X) had supposed causes recorded. 1217 admissions of men with unknown or unrecorded supposed causes have been excluded from this visualization.*
+
+1794
+
+**Supposed causes by Gender: Female**
+``` {r malesb, echo=FALSE}
+sund2b(ledger_female_sb)
+```
+*X% of admissions of women (X) had supposed causes recorded. 1156 women with unknown or unrecorded supposed causes have been excluded from this visualization.*
+
+<br/><br/>
+
+## County of Residence
+Patients' county of residence was recorded at each admission. 0.2% of admissions (14) did not have county of residence recorded, and 0.4% of admissions (27) resided out of state. Other states of residence included Alabama, Arkansas, California, Florida, Georgia, Mississippi, New York, Ohio, South Carolina, Tennessee, and Virginia.
+
+<br/><br/>
+
+### County of Residence for All Admissions
+``` {r residencetot, echo=FALSE}
+ptcountiesoverall
+```
+
+<br/><br/>
+
+### County of Residence by Year
+*Number of admissions per 1,000 county residents by census year*
+``` {r residenceyear, echo=FALSE}
+totalprop_fig
+```
+
+

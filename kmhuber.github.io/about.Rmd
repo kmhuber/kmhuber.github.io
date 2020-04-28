@@ -2,9 +2,12 @@
 title: "Acknowledgements"
 ---
 
-All data are courtesy of [Dr. Robert Allen](http://communityhistories.org/about/robert-allen/) and [Sarah Almond](http://communityhistories.org/about/sarah-almond/) at UNC-Chapel Hill. Ledgers were transcribed and digitized by Thomas Burnett, Hannah Frisch, Keely Curry, and Dani Callahan, based on physical intake ledgers provided by the City of Raleigh.
-
-Data cleaning and visualization was completed by Katie Huber and Nabarun Dasgupta at UNC-Chapel Hill. 
-
+<br/><br/>
+We are grateful to the City of Raleigh for funding part of the digitization process and making these data available for research. Data were obtained and digitized by a team led by [Robert C. Allen](http://communityhistories.org/about/robert-allen/) (the James Logan Godfrey Distinguished Professor of American Studies and Co-Director, Community Histories Workshop at The University of North Carolina at Chapel Hill), and [Sarah Almond](http://communityhistories.org/about/sarah-almond/) (Program Coordinator, Dorothea Dix Park History Initiative and Assistant Director, Community Histories Workshop at the Center for Urban and Regional Studies, UNC-Chapel Hill). The ledgers were transcribed and digitized by Thomas Burnett, Hannah Frisch, Keely Curry, and Dani Callahan. We are grateful to generations of taxpayers in North Carolina for supporting public universities. 
+<br/><br/>
+Data cleaning, analysis, and visualization was completed by Katie Huber and Nabarun Dasgupta at UNC-Chapel Hill. 
+<br/><br/>
+This study has been registered with the University of North Carolina Institutional Review Board.
+<br/><br/>
 [Open source code and project details](https://github.com/opioiddatalab/DixLedger)
 
