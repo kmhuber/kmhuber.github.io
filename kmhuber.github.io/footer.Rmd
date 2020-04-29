@@ -1,5 +1,0 @@
----
-title: "footer"
----
-
-<p>Copyright &copy; Katie Huber All rights reserved.</p>
