@@ -109,6 +109,8 @@ sund2b(ledger_female_sb)
 ## County of Residence
 Patients' county of residence was recorded at each admission. 0.2% of admissions (14) did not have county of residence recorded, and 0.4% of admissions (27) resided out of state. Other states of residence included Alabama, Arkansas, California, Florida, Georgia, Mississippi, New York, Ohio, South Carolina, Tennessee, and Virginia.
 
+County census data and shapefiles are from [IPUMS NHGIS, University of Minnesota](https://nhgis.org/).
+
 <br/><br/>
 
 ### County of Residence for All Admissions
