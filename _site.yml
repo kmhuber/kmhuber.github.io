@@ -17,7 +17,4 @@ output:
     toc: true
     toc_float: true
     theme: flatly
-    include:
-      after-body: footer.html
-    css: 'styles.css' 
-output_dir: "_site"
+    css: 'styles.css'
