@@ -20,3 +20,4 @@ output:
     include:
       after-body: footer.html
     css: 'styles.css' 
+output_dir: "_site"
