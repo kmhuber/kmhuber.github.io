@@ -11,7 +11,7 @@ source("ledger.R")
 
 ## Introduction
 
-Visualizations were created using R. Open source code is available on GitHub.
+Visualizations were created using R. Open source code is available on [GitHub](https://github.com/kmhuber/kmhuber.github.io).
 
 <br/><br/>
 
@@ -69,7 +69,7 @@ ledger_sb <- ledger_sb %>% group_by(supposedcausecategory1, supposedcausecleaned
 ledger_sb= ledger_sb %>% rename(count = "n()")
 
 ledger_sb = ledger_sb %>% mutate(path = paste(supposedcausecategory1, supposedcausecleaned1, supposedcausecleaned2, sep="-"))
-ledger_sb$path <- gsub("-NA", "-", ledger_sb$path)
+# ledger_sb$path <- gsub("-NA", "-", ledger_sb$path)
 ledger_sb <- head(ledger_sb, -1)
 
 ledger_sb <- ungroup(ledger_sb)
@@ -82,9 +82,9 @@ ledgersb <- ledger_sb %>% arrange(desc(count)) %>% select(path, count)
 **Frequencies of Supposed Causes**
 ``` {r sccleansbprint, echo=FALSE}
 # scclean
-sund2b(ledgersb)
+sund2b(ledgersb, rootLabel="total")
 ```
-*X% of admissions (X) had supposed causes recorded. X admissions with unknown or unrecorded supposed causes have been excluded from this visualization.*
+*67.5% of admissions (5050) had supposed causes recorded. 2429 admissions with unknown or unrecorded supposed causes have been excluded from this visualization.*
 <br/><br/>
 
 ### Supposed causes by Gender
@@ -92,22 +92,20 @@ The interactive sunburst charts below show supposed causes by gender. Gender was
 
 **Supposed causes by Gender: Male**
 ``` {r sunburstmale, echo=FALSE}
-sund2b(ledger_male_sb)
+sund2b(ledger_male_sb, rootLabel="Total")
 ```
-*X% of admissions of men (X) had supposed causes recorded. 1217 admissions of men with unknown or unrecorded supposed causes have been excluded from this visualization.*
-
-1794
+*68.3% of admissions of men (2617) had supposed causes recorded. 1214 admissions of men with unknown or unrecorded supposed causes have been excluded from this visualization.*
 
 **Supposed causes by Gender: Female**
 ``` {r malesb, echo=FALSE}
-sund2b(ledger_female_sb)
+sund2b(ledger_female_sb, rootLabel="Total")
 ```
-*X% of admissions of women (X) had supposed causes recorded. 1156 women with unknown or unrecorded supposed causes have been excluded from this visualization.*
+*67.2% of admissions of women (2372) had supposed causes recorded. 1153 women with unknown or unrecorded supposed causes have been excluded from this visualization.*
 
 <br/><br/>
 
 ## County of Residence
-Patients' county of residence was recorded at each admission. 0.2% of admissions (14) did not have county of residence recorded, and 0.4% of admissions (27) resided out of state. Other states of residence included Alabama, Arkansas, California, Florida, Georgia, Mississippi, New York, Ohio, South Carolina, Tennessee, and Virginia.
+Patients' county of residence was recorded at each admission. 0.2% of admissions (14) did not have county of residence recorded, and 0.4% of admissions (27) resided out of state. Other states of residence included Alabama, Arkansas, California, Florida, Georgia, Mississippi, New York, Ohio, South Carolina, Tennessee, and Virginia. These admissions are not represented in the maps below.
 
 County census data and shapefiles are from [IPUMS NHGIS, University of Minnesota](www.nhgis.org). 
 

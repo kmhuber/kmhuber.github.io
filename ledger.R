@@ -290,14 +290,14 @@ ledger_male <- ledger_male %>% group_by(supposedcausecategory1, supposedcausecle
 ledger_male = ledger_male %>% rename(count = "n()")
 
 ledger_male = ledger_male %>% mutate(path = paste(supposedcausecategory1, supposedcausecleaned1, supposedcausecleaned2, sep="-"))
-ledger_male$path <- gsub("-NA", "-", ledger_male$path)
+# ledger_male$path <- gsub("-NA", "-", ledger_male$path)
 ledger_male <- head(ledger_male, -1)
 
 ledger_male <- ungroup(ledger_male)
 ledger_male_sb <- ledger_male %>% arrange(desc(count)) %>% select(path, count)
 
 sum(ledger_male_sb$count)
-sund2b(ledger_male_sb)
+sund2b(ledger_male_sb, valueField="count")
 
 # sb_male <- sunburst(data=ledger_male_sb, legend=FALSE)
 # sb_male <- ledger_male %>% arrange(desc(count)) %>% mutate(path = paste(supposedcausecategory1, supposedcausecleaned1, supposedcausecleaned2, sep='-')) %>% select(path, count) %>% sunburst(breadcrumb = list(w=200))
@@ -313,7 +313,7 @@ ledger_female <- ledger_female %>% group_by(supposedcausecategory1, supposedcaus
 ledger_female = ledger_female %>% rename(count = "n()")
 
 ledger_female = ledger_female %>% mutate(path = paste(supposedcausecategory1, supposedcausecleaned1, supposedcausecleaned2, sep="-"))
-ledger_female$path <- gsub("-NA", "-", ledger_female$path)
+# ledger_female$path <- gsub("-NA", "-", ledger_female$path)
 ledger_female <- head(ledger_female, -1)
 
 ledger_female <- ungroup(ledger_female)
@@ -324,7 +324,7 @@ ledger_female_sb <- ledger_female %>% arrange(desc(count)) %>%select(path, count
 # sb_female
 
 p2 <- sund2b(ledger_female_sb)
-
+p2
 
 # below needs work
 
