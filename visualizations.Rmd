@@ -104,6 +104,24 @@ sund2b(ledger_female_sb, rootLabel="Total")
 
 <br/><br/>
 
+## Diagnoses
+Diagnoses, or forms of illness, were noted in the ledger for 92.8% (6937) of admissions. 542 admissions with unknown or unrecorded supposed causes have been excluded from the following visualization.
+
+``` {r form, echo=FALSE}
+sund2b(ledger_form, rootLabel="Total")
+```
+
+<br/><br/>
+
+## Occupation
+Patients had their occupations recorded at each admission. Occupations have been cleaned into categories to facilitate visualization. 1582 admissions had unknown occupations and have been excluded from this visualization. 
+
+``` {r occupation, echo=FALSE}
+occupationplot
+```
+
+<br/><br/>
+
 ## County of Residence
 Patients' county of residence was recorded at each admission. 0.2% of admissions (14) did not have county of residence recorded, and 0.4% of admissions (27) resided out of state. Other states of residence included Alabama, Arkansas, California, Florida, Georgia, Mississippi, New York, Ohio, South Carolina, Tennessee, and Virginia. These admissions are not represented in the maps below.
 

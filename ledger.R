@@ -16,6 +16,7 @@ library(sunburstR)
 library(d3r)
 library(htmltools)
 library(patchwork)
+library(chorddiag)
 
 ledger = read_csv("DixLedgerDeidentified_clean.csv")
 options(scipen=999)
@@ -81,6 +82,68 @@ ledger$supposedcausecleaned2 <- str_replace_all(ledger$supposedcausecleaned2, " 
 str(ledger$supposedcausecategory1)
 ledger$supposedcausecategory1 <- recode(ledger$supposedcausecategory1, "SItuational"="Situational")
 table(ledger$supposedcausecategory1, ledger$supposedcausecleaned1, useNA = "always")
+
+# cleaning form
+ledger$formcleaned <- gsub("Dementia Precox", "Dementia Praecox", ledger$formcleaned)
+ledger_form <- data.frame(table(ledger$formcleaned, useNA="always"))
+ledger_form$Var1 <- as.character(ledger_form$Var1)
+ledger_form$Var1[is.na(ledger_form$Var1)] <- "Unknown"
+ledger_form$Var1 <- factor(ledger_form$Var1)
+ledger_form = ledger_form %>% rename(Form = "Var1", Frequency="Freq")
+
+ledger_form$Form2 <- str_split(ledger_form$Form, "; ")
+ledger_form$form3 <- !grepl(",", ledger_form$Form2)
+ledger_form = ledger_form %>%
+  mutate(Form2 = case_when(
+    form3 == FALSE ~ substring(Form, regexpr("; ", Form) + 1),
+    TRUE ~ NA_character_
+  ) %>% as_factor()
+  )
+
+ledger_form$Form <- str_replace_all(ledger_form$Form, "Unknown", NA_character_)
+ledger_form$Form <- str_replace_all(ledger_form$Form, ";.*", "")
+ledger_form$Form2 <- str_replace_all(ledger_form$Form2, " ", "")
+
+ledger_form$Form3 <- str_split(ledger_form$Form2, ";")
+ledger_form$form4 <- !grepl(",", ledger_form$Form3)
+ledger_form = ledger_form %>%
+  mutate(Form3 = case_when(
+    form4 == FALSE ~ substring(Form2, regexpr(";", Form2) + 1),
+    TRUE ~ NA_character_
+  ) %>% as_factor()
+  )
+
+ledger_form$Form2 <- str_replace_all(ledger_form$Form2, "Unknown", NA_character_)
+ledger_form$Form2 <- str_replace_all(ledger_form$Form2, ";.*", "")
+ledger_form$Form3 <- str_replace_all(ledger_form$Form3, " ", "")
+
+# cleaning occupation 
+ledger$occupationcleaned <- str_replace_all(ledger$occupationcleaned, "no entry", "unknown")
+ledger$occ_value_cleaned <- word(ledger$occupationcleaned, 1, sep="\\;")
+ledger$occ_value_cleaned <- as.character(ledger$occ_value_cleaned)
+ledger$occ_value_cleaned <- gsub("None", "none", ledger$occ_value_cleaned)
+ledger$occ_value_cleaned[is.na(ledger$occ_value_cleaned)] <- "unknown"
+ledger$occ_value_cleaned <- factor(ledger$occ_value_cleaned)
+
+ledger = ledger %>%
+  mutate(occ_category_cleaned = case_when(
+    occ_value_cleaned == "merchant" | occ_value_cleaned == "salesman" | occ_value_cleaned == "broker" ~ "sales",
+    occ_value_cleaned == "accountant" | occ_value_cleaned == "lawyer" | occ_value_cleaned == "engineer" | occ_value_cleaned == "surveyor" | occ_value_cleaned == "botanist" | occ_value_cleaned == "agent" | occ_value_cleaned == "architect" | occ_value_cleaned == "editor" | occ_value_cleaned == "printer" | occ_value_cleaned == "reporter" ~ "professional",
+    occ_value_cleaned == "painter" | occ_value_cleaned == "florist" | occ_value_cleaned == "musician" | occ_value_cleaned == "jeweler" | occ_value_cleaned == "author" | occ_value_cleaned == "decorator" | occ_value_cleaned == "artist" ~ "creative",
+    occ_value_cleaned == "dentist" | occ_value_cleaned == "physician" | occ_value_cleaned == "pharmacist" | occ_value_cleaned == "nurse" | occ_value_cleaned == "optician" ~ "healthcare",
+    occ_value_cleaned == "domestic" | occ_value_cleaned == "housewife" | occ_value_cleaned == "housekeeper" ~ "household",
+    occ_value_cleaned == "clerk" | occ_value_cleaned == "stenographer" | occ_value_cleaned == "auditor" | occ_value_cleaned == "banker" | occ_value_cleaned == "inspector" | occ_value_cleaned == "teller" | occ_value_cleaned == "grader" ~ "clerical",
+    occ_value_cleaned == "farmer" ~ "agriculture",
+    occ_value_cleaned == "laborer" | occ_value_cleaned ==  "worker" | occ_value_cleaned == "watchman" | occ_value_cleaned == "janitor" | occ_value_cleaned == "miner" | occ_value_cleaned == "paper folder" | occ_value_cleaned == "road builder" ~ "unskilled labor",
+    occ_value_cleaned == "lineman" | occ_value_cleaned == "fisherman" | occ_value_cleaned == "boatman" | occ_value_cleaned == "operator" | occ_value_cleaned == "manufacturer" | occ_value_cleaned == "lumberman" | occ_value_cleaned == "oysterman" | occ_value_cleaned == "grinder" | occ_value_cleaned == "layer" | occ_value_cleaned == "plasterer" | occ_value_cleaned == "carpenter" | occ_value_cleaned == "flagman" | occ_value_cleaned == "pressman" | occ_value_cleaned == "sailor" | occ_value_cleaned == "sampler" ~ "semi-skilled labor",
+    occ_value_cleaned == "maker" | occ_value_cleaned == "butcher" | occ_value_cleaned == "fireman" | occ_value_cleaned == "contractor" | occ_value_cleaned == "mechanic" | occ_value_cleaned == "piano tuner" | occ_value_cleaned == "weaver" | occ_value_cleaned == "seamstress" | occ_value_cleaned == "blacksmith" | occ_value_cleaned == "section master" | occ_value_cleaned == "tailor" | occ_value_cleaned == "upholsterer" | occ_value_cleaned == "machinist" | occ_value_cleaned == "tinsmith" | occ_value_cleaned == "silversmith" | occ_value_cleaned == "captain" | occ_value_cleaned == "electrician" | occ_value_cleaned == "mason" | occ_value_cleaned == "millwright" | occ_value_cleaned == "plumber" | occ_value_cleaned == "undertaker" | occ_value_cleaned == "baker" ~ "skilled labor",
+    occ_value_cleaned == "cook" | occ_value_cleaned == "keeper" | occ_value_cleaned == "bartender" | occ_value_cleaned == "liveryman" | occ_value_cleaned == "carrier" | occ_value_cleaned == "dairyman" | occ_value_cleaned == "barber" | occ_value_cleaned == "waiter" | occ_value_cleaned == "attendant" | occ_value_cleaned == "laundryman" | occ_value_cleaned == "occultist" | occ_value_cleaned == "photographer" | occ_value_cleaned == "prostitute" | occ_value_cleaned == "porter" | occ_value_cleaned == "driver" | occ_value_cleaned == "conductor" ~ "service",
+    occ_value_cleaned == "law enforcement officer" | occ_value_cleaned == "justice of the peace" ~ "government",
+    occ_value_cleaned == "minister" ~ "religion",
+    occ_value_cleaned == "soldier" ~ "military",
+    occ_value_cleaned == "student" | occ_value_cleaned == "teacher" | occ_value_cleaned == "professor" ~ "education",
+    occ_value_cleaned == "none" ~ "none"
+  ))
 
 # delete unnecessary variables
 ledger <- subset(ledger, select = -c(sc3, supposedcausecategory2, finalcondition3, nc_county))
@@ -326,82 +389,22 @@ ledger_female_sb <- ledger_female %>% arrange(desc(count)) %>%select(path, count
 p2 <- sund2b(ledger_female_sb)
 p2
 
-# below needs work
+# form
+ledger_form <- ledger_form %>% select(Form, Form2, Form3, Frequency)
+ledger_form = ledger_form %>% mutate(path = paste(Form, Form2, Form3, sep="-"))
+ledger_form <- head(ledger_form, -2)
+ledger_form <- ungroup(ledger_form)
+ledger_form <- ledger_form %>% arrange(desc(Frequency)) %>% select(path, Frequency)
 
-# male + female together
-# shinyApp(ui = ui, server = server)
+sund2b(ledger_form)
 
-# # an example with d2b sunburst and Shiny
-# library(shiny)
-# library(sunburstR)
-
-# # use a sample of the sequences csv data
-# sequences <- read.csv(
-#   system.file("examples/visit-sequences.csv",package="sunburstR")
-#   ,header = FALSE
-#   ,stringsAsFactors = FALSE
-# )[1:200,]
-
-# # create a d2b sunburst
-# s2b <- sund2b(sequences)
-# 
-# options(shiny.trace=TRUE)
-# ui <- sund2bOutput("s2b")
-# server <- function(input, output, session) {
-#   output$s2b <- renderSund2b({
-#     add_shiny(s2b)
-#   })
-# }
-# shinyApp(ui, server)
+# occupation 
+occ_bar <- subset(ledger, select=c(occ_value_cleaned, occ_category_cleaned))
+occ_bar <- occ_bar %>% group_by(occ_category_cleaned, occ_value_cleaned) %>% summarize(n()) 
+occ_bar = occ_bar %>% rename(count = "n()")
+occ_bar <- head(occ_bar, -1)
 
 
-#............................
-# Old code ####
-#............................
+occupationplot <- ggplotly(ggplot(occ_bar, aes(fill=occ_value_cleaned, x=occ_category_cleaned, y=count, text=paste("Occupation Category:", occ_category_cleaned, "<br>", "Occupation:", occ_value_cleaned, "<br>", "Count:", count))) + geom_bar(position="stack", stat="identity") + coord_flip()
+         + labs(y="Occupation Category", x="Count") + theme_minimal() + theme(legend.position="none"), tooltip="text")
 
-# merging ptprop years into one df
-# totalprop <- bind_rows(nc_1850_pt, nc_1860_pt, nc_1870_pt, nc_1890_pt, nc_1900_pt, nc_1910_pt
-# test <- test %>% group_by(county, censusyear)
-
-# # shiny app - dropdown
-# library(shiny)
-# 
-# choice_data <- list("prop1850", "prop1860", "prop1870", "prop1880", "prop1890", "prop1900", "prop1910")
-# ui <- shinyUI(fluidPage(selectInput("select", "Select a year", choices=choice_data), 
-#                         plotlyOutput("1850", width="900",height = "400px"),
-#                         plotlyOutput("1850", width="900",height = "400px"),
-#                         plotlyOutput("1870", width="900",height = "400px"),
-#                         plotlyOutput("1880", width="900",height = "400px"),
-#                         plotlyOutput("1890", width="900",height = "400px"),
-#                         plotlyOutput("1900", width="900",height = "400px"),
-#                         plotlyOutput("1910", width="900",height = "400px")
-#                         ))
-# 
-# choice_data <- list("Census_Year_1850", "Census_Year_1860", "Census_Year_1870", "Census_Year_1880", "Census_Year_1890", "Census_Year_1900", "Census_Year_1910")
-# ui <- shinyUI(fluidPage(selectInput("select", "Select a year", choices=choice_data),
-#                         plotlyOutput("Census_Year_1850", width="900",height = "400px"),
-#                         plotlyOutput("Census_Year_1860", width="900",height = "400px"),
-#                         plotlyOutput("Census_Year_1870", width="900",height = "400px"),
-#                         plotlyOutput("Census_Year_1880", width="900",height = "400px"),
-#                         plotlyOutput("Census_Year_1890", width="900",height = "400px"),
-#                         plotlyOutput("Census_Year_1900", width="900",height = "400px"),
-#                         plotlyOutput("Census_Year_1910", width="900",height = "400px")
-#                         ))
-# 
-# server <- function(input, output){    
-#   output$Census_Year_1850 <- renderPlotly(prop1850)
-#   
-#   output$Census_Year_1860 <- renderPlotly(prop1860)
-#   
-#   output$Census_Year_1870 <- renderPlotly(prop1870)
-#   
-#   output$Census_Year_1880 <- renderPlotly(prop1880)
-#   
-#   output$Census_Year_1890 <- renderPlotly(prop1890)
-#   
-#   output$Census_Year_1900 <- renderPlotly(prop1900)
-#   
-#   output$Census_Year_1910 <- renderPlotly(prop1910)
-# }
-# 
-# shinyApp(ui,server)
