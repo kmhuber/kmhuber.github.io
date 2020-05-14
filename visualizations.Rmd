@@ -112,7 +112,7 @@ sund2b(ledger_form, rootLabel="Total")
 ```
 
 <br/><br/>
-
+ 
 ## Occupation
 Patients had their occupations recorded at each admission. Occupations have been cleaned into categories to facilitate visualization. 1582 admissions had unknown occupations and have been excluded from this visualization. 
 
